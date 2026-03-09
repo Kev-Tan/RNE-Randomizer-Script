@@ -72,16 +72,15 @@ public class CreateFixedPath : MonoBehaviour
         int bestX = best.x;
         int bestZ = best.y; // remember: Vector2Int.y = z
         //Add pertubations to encourage randomized path
-        float bestF = grid[bestZ, bestX].g + grid[bestZ, bestX].h 
-            //+Random.Range(0f, 0.1f);
-
+        float bestF = grid[bestZ, bestX].g + grid[bestZ, bestX].h;
+        
         for (int i = 1; i < openList.Count; i++)
         {
             Vector2Int p = openList[i];
             int x = p.x;
             int z = p.y;
 
-            int f = grid[z, x].g + grid[z, x].h;
+            float f = grid[z, x].g + grid[z, x].h + Random.Range(0f, 1f);
             if (f < bestF)
             {
                 bestF = f;
@@ -207,14 +206,8 @@ public class CreateFixedPath : MonoBehaviour
         return null;
     }
 
-
-    void Start()
-    {
+    void createPath(Vector2Int start, Vector2Int goal) {
         InitGrid();
-        // Vector2Int is (x, y). We use y as z.
-        Vector2Int start = new Vector2Int(startX, startZ);
-        Vector2Int goal = new Vector2Int(goalX, goalZ);
-
         // grid is [z, x]
         grid[startZ, startX].g = 0;
         grid[startZ, startX].inOpen = true;
@@ -239,6 +232,25 @@ public class CreateFixedPath : MonoBehaviour
             else
                 Debug.LogError("TileManager not assigned!");
         }
+    }
+
+
+    void Start()
+    {
+
+        // Left starting point
+        // Vector2Int is (x, y). We use y as z.
+        Vector2Int start = new Vector2Int(startX, startZ);
+        Vector2Int goal = new Vector2Int(goalX, goalZ);
+        createPath(start, goal);
+
+
+        // Right starting point
+        // Vector2Int is (x, y). We use y as z.
+        start = new Vector2Int(7, 0);
+        goal = new Vector2Int(goalX, goalZ);
+        createPath(start, goal);
+
     }
 
     void Update() { }

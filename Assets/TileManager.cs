@@ -13,10 +13,8 @@ public class TileManager : MonoBehaviour
     [SerializeField] private float tileSizeX;
     [SerializeField] private float tileSizeZ;
 
-    [Header("Prefab Location")]
+    [Header("Prefab Settings")]
     [SerializeField] private GameObject prefabObject = null;
-    [SerializeField] private int xIndex = 3;
-    [SerializeField] private int zIndex = 3;
 
 
     public GameObject PlaceRoad(int zIndex, int xIndex, GameObject prefab)
@@ -30,10 +28,15 @@ public class TileManager : MonoBehaviour
         tileSizeX = gridSizeX / 8f;
         tileSizeZ = gridSizeZ / 8f;
 
-        float worldX = transform.position.x + (gridSizeX * 0.5f) + (-xIndex * tileSizeX) - (tileSizeX * 0.5f);
-        float worldZ = transform.position.z + (gridSizeZ * 0.5f) + (-zIndex * tileSizeZ) - (tileSizeZ * 0.5f);
+        float worldX = 0f;
+        float worldZ = 0f;
 
-        GameObject createdRoad = Instantiate(prefab, new Vector3(worldX, -0.15f, worldZ), transform.rotation);
+      
+        worldX = transform.position.x + (gridSizeX * 0.5f) + (-xIndex * tileSizeX) - (tileSizeX * 0.5f);
+        worldZ = transform.position.z + (gridSizeZ * 0.5f) + (-zIndex * tileSizeZ) - (tileSizeZ * 0.5f);
+       
+
+            GameObject createdRoad = Instantiate(prefab, new Vector3(worldX, -0.15f, worldZ), transform.rotation);
         createdRoad.transform.localScale = new Vector3(tileSizeX, 0.02f, tileSizeZ);
         return createdRoad;
     }
