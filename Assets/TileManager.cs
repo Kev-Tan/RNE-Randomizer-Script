@@ -37,7 +37,7 @@ public class TileManager : MonoBehaviour
         return createdRoad;
     }
 
-    public GameObject PlaceBear(int zIndex, int xIndex, GameObject prefab)
+    public GameObject PlaceBear(int zIndex, int xIndex, GameObject prefab, bool onBridge)
     {
         if (prefab == null)
         {
@@ -51,10 +51,18 @@ public class TileManager : MonoBehaviour
         float worldX = 0f;
         float worldZ = 0f;
 
+
+        float worldYDefault = -0.17f; // default Y position for the bear
+
+
         worldX = transform.position.x + (gridSizeX * 0.5f) + (-xIndex * tileSizeX) - (tileSizeX * 0.5f);
         worldZ = transform.position.z + (gridSizeZ * 0.5f) + (-zIndex * tileSizeZ) - (tileSizeZ * 0.5f);
 
-        GameObject createdBear = Instantiate(prefab, new Vector3(worldX, -0.17f, worldZ), transform.rotation);
+        if(onBridge)
+        {
+            worldYDefault += 0.30f; // slightly above the road
+        }
+        GameObject createdBear = Instantiate(prefab, new Vector3(worldX, worldYDefault, worldZ), transform.rotation);
         return createdBear;
     }
 

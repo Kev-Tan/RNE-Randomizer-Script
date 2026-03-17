@@ -34,6 +34,11 @@ public class RandomMirroredPlacer : MonoBehaviour
         int attempts = 0;
         int maxAttempts = 200;
 
+        tileManager.PlaceBear(2, 4, bearPrefab, true);
+        numberOfObjectsToPlace -= 1;
+        numberOfObjectsToPlace /= 2;
+
+
         while (placedCount < numberOfObjectsToPlace && attempts < maxAttempts)
         {
             attempts++;
@@ -49,8 +54,9 @@ public class RandomMirroredPlacer : MonoBehaviour
                 continue;
             }
 
-            tileManager.PlaceBear(zIndex, xIndex, bearPrefab);
-            tileManager.PlaceBear(zIndex, mirrorXIndex, bearPrefab);
+
+            tileManager.PlaceBear(zIndex, xIndex, bearPrefab, false);
+            tileManager.PlaceBear(zIndex, mirrorXIndex, bearPrefab, false);
 
             occupiedGrid[xIndex, zIndex] = true;
             occupiedGrid[mirrorXIndex, zIndex] = true;
